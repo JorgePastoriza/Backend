@@ -1,6 +1,6 @@
 const fs = require('fs')
 
-export default class ProductManager {
+class ProductManager {
     constructor(filePath){
         this.product = []
         this.path = filePath
@@ -76,6 +76,7 @@ export default class ProductManager {
     }
 }
 
+module.exports = { ProductManager };
 
 // const fileUse = async() =>{
 //     console.log(await producto.getProducts())
