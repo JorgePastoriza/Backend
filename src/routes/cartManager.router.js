@@ -2,6 +2,8 @@ const {Router}= require ('express')
 const router = Router()
 const { CartManager }  = require('../cartManager.js')
 const carrito = new CartManager()
+const { ProductManager }  = require('../ProductManager.js')
+const producto = new ProductManager()
 
 // establecer middleware se agrega en el metodo que se llama (get, post, put) luego del endpoint el llamado a mid1
 // function mid1 (req, res, next){
@@ -37,12 +39,15 @@ router.post('/:cid/product/:pid', async(req, res) => {
     const id = parseInt(req.params.cid)
     const prod = parseInt(req.params.pid)
     const cart = await carrito.getCartById(id)
-    let productoEncontrado = cart.products.findIndex(productos => productos.id == prod)
+    const arrayProductos =  await producto.getProducts()
+    let productoEncontrado = cart.products.findIndex(productos => productos.id === prod)
     if (productoEncontrado !== -1) {
         cart.products[productoEncontrado].quantity += 1 
         await carrito.updateCart(id, cart)
         return res.status(200).send({ statusbar: 'success', message: 'producto agregado'});
     }else{
+        let prodExiste = arrayProductos.find(pd => pd.id === prod)
+        if (!prodExiste) return res.send({error: 'No se encuentra el producto'})
         let producto ={}
         producto.id = prod
         producto.quantity = 1
