@@ -1,4 +1,5 @@
 const fs = require('fs')
+//const socket = io()
 
 class ProductManager {
     //constructor(filePath){
@@ -10,7 +11,6 @@ class ProductManager {
     readFile = async () =>{
         try{
             const data = await fs.promises.readFile(this.path, 'utf-8')
-            //console.log(data)
             return JSON.parse(data)
         }catch (error){
             return []
@@ -53,6 +53,7 @@ class ProductManager {
                 this.product = [...this.product, {id: this.product[this.product.length - 1].id + 1, ...newProduct , status: true} ]
             }
             await fs.promises.writeFile(this.path, JSON.stringify(this.product,'utf-8','\t'))
+            //socket.emit('message', this.product)
             return 'Producto cargado'
         }catch (error){
             return new Error(error)

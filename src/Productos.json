@@ -18,15 +18,6 @@
 		"code": "abc122"
 	},
 	{
-		"id": 3,
-		"title": "producto prueba3",
-		"description": "Este es un producto prueba3",
-		"price": 300,
-		"thumbnails": "sin imagen",
-		"stock": 200,
-		"code": "abc123"
-	},
-	{
 		"id": 4,
 		"title": "producto prueba4",
 		"description": "Este es un producto prueba4",
@@ -34,6 +25,16 @@
 		"thumbnails": "sin imagen",
 		"stock": 200,
 		"code": "abc124",
+		"status": true
+	},
+	{
+		"id": 5,
+		"title": "producto nuevo",
+		"description": "cargado por post",
+		"price": 50,
+		"thumbnails": "sin imagen",
+		"stock": 200,
+		"code": "abc125",
 		"status": true
 	}
 ]
