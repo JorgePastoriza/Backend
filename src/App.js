@@ -6,7 +6,7 @@ const cartRouter = require ('./routes/cartManager.router')
 const viewStatic = require ('./routes/views.router')
 //importamos el server 
 const { Server } = require('socket.io') 
-const {socketProducts} = require ('./public/js/socketproducts')
+const {socketProducts} = require ('./socketproducts')
 //____________________________________________________________________
 const app = express()
 const PORT = 8080

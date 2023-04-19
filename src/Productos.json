@@ -36,5 +36,15 @@
 		"stock": 200,
 		"code": "abc125",
 		"status": true
+	},
+	{
+		"id": 6,
+		"title": "producto 6",
+		"description": "cargado por post pare reenvio TP",
+		"price": 50,
+		"thumbnails": "sin imagen",
+		"stock": 200,
+		"code": "abc126",
+		"status": true
 	}
 ]

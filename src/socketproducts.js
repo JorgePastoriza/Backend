@@ -1,4 +1,4 @@
-const { ProductManager }  = require('../../ProductManager')
+const { ProductManager }  = require('./ProductManager')
 const productManager = new ProductManager()
 
 const socketProducts = async(io) =>{
