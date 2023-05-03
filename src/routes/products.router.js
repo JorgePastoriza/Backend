@@ -1,48 +1,78 @@
 const {Router}= require ('express')
 const router = Router()
-const { ProductManager }  = require('../ProductManager.js')
-const producto = new ProductManager()
+const productManager = require('../dao/product.mongo.js')
+//const { productModel } = require('../dao/models/products.model')
 
 //GET
 router.get('/', async(req, res) => {
-    const prod =  await producto.getProducts()
-    const limit = req.query.limit
-    if(!limit) return res.send(prod)
-    res.send(prod.slice(0,limit))
+    try {
+        const products = await productManager.getProducts()
+        res.status(200).send({
+            status: 'success',
+            payload: products
+        })
+    }catch(error){
+        return new Error(error)
+    }
 })
 
 router.get('/:pid', async(req, res) => {
-    const id = parseInt(req.params.pid)
-    const prod =  await producto.getProductById(id)
-    if(!prod) return res.send({error: 'No se encuentra el producto'})
-    res.send(prod)
+    try {
+        const {pid} = req.params
+        let product = await productManager.getProductById(pid)
+        res.status(200).send({
+            status: 'success',
+            payload: product
+        })
+    }catch(error){
+        return new Error(error)
+    }
 })
 
 //------------------------------------------------
 //POST
 router.post('/', async(req, res) => {
-    let prod = req.body
-    if(!prod.title || !prod.description) {
-        return res.status(400).send({status: 'error', messaje: 'Todos los campos son necesarios'})
+    try {
+        const newProduct = req.body
+        let result = await productManager.addProduct(newProduct)
+        res.status(200).send({
+            status: 'success',
+            payload: result
+        })
+    } catch (error) {
+        return new Error(error)
     }
-    res.send({status: "Sucess", messaje: await producto.addProduct(prod)})
-    //res.status(200).send({prod})
+
 })
 
 //------------------------------------------------
 //PUT
 router.put('/:pid', async(req, res) =>{
-    const pid = parseInt(req.params.pid)
-    const prod = req.body
-    await producto.updateProduct(pid, prod)
-    res.send(producto)
+    try{
+        const { pid } = req.params
+        const newProduct = req.body
+        let result = await productManager.updateProduct(pid, newProduct)
+        res.status(200).send({
+            status: 'success',
+            payload: result})
+    } catch(error) {
+        return new Error(error)
+    }
 })
 
 //------------------------------------------------
 //DELETE
 router.delete('/:pid', async(req, res) =>{
-    const pid = parseInt(req.params.pid)
-    res.send({status: "Success", message: await producto.deleteProduct(pid)})
+    try {   
+        const { pid } = req.params
+        await productManager.deleteProduct(pid)
+        res.status(200).send({
+            status: 'success',
+            payload: `Producto id: ${pid} fue eliminado`
+        })
+    } catch (error) {
+        return new Error(error)
+    }
 })
 
 module.exports = router

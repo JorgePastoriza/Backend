@@ -1,5 +1,8 @@
-const { ProductManager }  = require('./ProductManager')
-const productManager = new ProductManager()
+//const { ProductManager }  = require('./dao/models/ProductManager')
+//const productManager = new ProductManager()
+const {Router}= require ('express')
+const router = Router()
+const productManager = require('../src/dao/product.mongo.js')
 
 const socketProducts = async(io) =>{
     const products = await productManager.getProducts()
