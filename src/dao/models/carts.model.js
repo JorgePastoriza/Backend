@@ -1,24 +1,12 @@
-const {Schema, model} = require ('mongoose')
+const {Schema, model, mongoose } = require ('mongoose')
 const collection = 'carts'
 
-/*
-"id": 1,
-		"products": [
-			{
-				"id": 1,
-				"quantity": 2
-			},
-			{
-				"id": 3,
-				"quantity": 1
-			}
-		]
-*/
+var Productos = mongoose.model('products');
 
 const cartSchema = new Schema({
 	status: String,
     products: [{
-			id: Schema.ObjectId,
+			id: { type: Schema.ObjectId, ref: "Productos" },
 			quantity: Number
 	}]
 })
