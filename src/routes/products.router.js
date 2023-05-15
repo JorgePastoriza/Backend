@@ -10,7 +10,7 @@ router.get('/', async(req, res) => {
         res.status(200).send({
             status: 'success',
             payload: products
-        })
+        }) 
     }catch(error){
         return new Error(error)
     }
