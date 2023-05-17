@@ -1,12 +1,25 @@
 const {Router}= require ('express')
 const router = Router()
 const productManager = require('../dao/product.mongo.js')
-//const { productModel } = require('../dao/models/products.model')
+const { productModel } = require('../dao/models/products.model')
 
 //GET
 router.get('/', async(req, res) => {
     try {
-        const products = await productManager.getProducts()
+        let page = parseInt(req.query.page)
+        let limit = parseInt(req.query.limit)
+        let sort = req.query.sort
+        let sortType = {}
+        //Validaciones del Query-------------
+        if(!page) page = 1
+        if(!limit) limit = 4
+        if(sort === 'asc'){
+            sortType = {price: 1}
+        } else if (sort === 'desc'){
+            sortType = {price: -1}
+        }
+        //const products = await productManager.getProducts()
+        const products =  await productModel.paginate({},{page,limit,sort, lean:true})
         res.status(200).send({
             status: 'success',
             payload: products
