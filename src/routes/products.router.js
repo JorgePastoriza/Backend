@@ -12,7 +12,7 @@ router.get('/', async(req, res) => {
         let sortType = {}
         //Validaciones del Query-------------
         if(!page) page = 1
-        if(!limit) limit = 4
+        if(!limit) limit = 5
         if(sort === 'asc'){
             sortType = {price: 1}
         } else if (sort === 'desc'){
